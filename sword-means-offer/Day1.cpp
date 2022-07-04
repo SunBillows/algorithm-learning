@@ -130,7 +130,7 @@ void replaceblank(char* str,int length)
 
 int main()
 {
-	char str[] = "We are happy.";
+	char str[23] = " We are happy. ";
 	int size = sizeof(str);
 	replaceblank(str,size);
 	cout << str << endl;
