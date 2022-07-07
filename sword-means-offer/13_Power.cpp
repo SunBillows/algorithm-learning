@@ -1,11 +1,13 @@
-//ÃæÊÔÌâ11£ºÊıÖµµÄÕûÊı´Î·½
-//ÌâÄ¿£ºÊµÏÖº¯Êı double Power(double base,int exponent),Çó base µÄ exponent ´Î·½¡£
+//é¢è¯•é¢˜11ï¼šæ•°å€¼çš„æ•´æ•°æ¬¡æ–¹
+//é¢˜ç›®ï¼šå®ç°å‡½æ•° double Power(double base,int exponent),æ±‚ base çš„ exponent æ¬¡æ–¹ã€‚
 
 
 #include <iostream>
 using namespace std;
 
-
+//ç”±äº double ç±»å‹ç²¾åº¦ä¸ç­‰åŸå› ï¼Œæ— æ³•ç›´æ¥åˆ©ç”¨ == æ¥è¿›è¡Œåˆ¤æ–­
+//æ‰€ä»¥å†™ä¸€ä¸ªå‡½æ•°æ¥åˆ¤æ–­ä¸¤ä¸ªæµ®ç‚¹å‹çš„æ•°æ®ç±»å‹æ˜¯å¦ç›¸ç­‰
+//åˆ¤æ–­ä¸¤ä¸ªå°æ•°æ˜¯å¦ç›¸ç­‰ï¼Œåªèƒ½åˆ¤æ–­å®ƒä»¬ä¹‹å·®çš„ç»å¯¹å€¼æ˜¯ä¸æ˜¯åœ¨ä¸€ä¸ªå¾ˆå°çš„èŒƒå›´å†…ã€‚å¦‚æœä¸¤ä¸ªæ•°ç›¸å·®å¾ˆå°ï¼Œå°±å¯ä»¥åˆ¤æ–­ç›¸ç­‰
 bool equal(double num1, double num2)
 {
 	if ((num1 - num2 > -0.0000001) && (num1 - num2 < 0.0000001))
@@ -14,7 +16,7 @@ bool equal(double num1, double num2)
 		return false;
 }
 
-//Ö»¿¼ÂÇÖ¸Êı exponent ÊÇÕıÊıµÄÇé¿ö
+//åªè€ƒè™‘æŒ‡æ•° exponent æ˜¯æ­£æ•°çš„æƒ…å†µ
 double Power_1(double base, int exponent)
 {
 	double ans = 1.0;
@@ -25,15 +27,18 @@ double Power_1(double base, int exponent)
 	return ans;
 }
 
-bool g_InvalidInput = false;
 
-//¿¼ÂÇÖ¸Êı exponent ÊÇ 0 »ò¸ºÊıµÄÇé¿ö
+//è¯¥å®šä¹‰æ˜¯ä¸ºäº†åœ¨è¾“å…¥å€¼æ—¶å‡ºç°å¼‚å¸¸ä»è€ŒæŠ›å‡ºå¼‚å¸¸ç»“æœï¼ˆå…¨å±€æ–¹æ³•ï¼‰
+bool g_InvalidInput = false;
+//è€ƒè™‘æŒ‡æ•° exponent æ˜¯ 0 æˆ–è´Ÿæ•°çš„æƒ…å†µ
 double Power_2(double base, int exponent)
 {
-	//Ê×ÏÈĞèÒªÅĞ¶Ï£¬µ± base Îª 0 £¬ÇÒ exponent Îª¸ºÊıÊ±£¬³ÌĞòÅ×³öÒì³£
+	//é¦–å…ˆéœ€è¦åˆ¤æ–­ï¼Œå½“ base ä¸º 0 ï¼Œä¸” exponent ä¸ºè´Ÿæ•°æ—¶ï¼Œç¨‹åºæŠ›å‡ºå¼‚å¸¸
 	if (equal(base, 0.0) && exponent < 0)
 	{
+		//å…¨å±€æ–¹å¼æŠ›å‡ºå¼‚å¸¸
 		g_InvalidInput = true;
+		//è¿”å›å€¼æ–¹å¼æŠ›å‡ºå¼‚å¸¸
 		return 0.0;
 	}
 
@@ -47,18 +52,49 @@ double Power_2(double base, int exponent)
 	return ans;	
 }
 
-////ÓÉÓÚ double ÀàĞÍ¾«¶È²»µÈÔ­Òò£¬ÎŞ·¨Ö±½ÓÀûÓÃ == À´½øĞĞÅĞ¶Ï
-////ËùÒÔĞ´Ò»¸öº¯ÊıÀ´ÅĞ¶ÏÁ½¸ö¸¡µãĞÍµÄÊı¾İÀàĞÍÊÇ·ñÏàµÈ
-//bool equal_float(double num1, double num2)
-//{
-//
-//}
+//é‡‡ç”¨é€’å½’çš„æ–¹å¼ä¼˜åŒ–è¯¥è§£æ³•
+double Power_3(double base, int exponent)
+{
+	if (0 == exponent)
+		return 1;
+	if (1 == exponent)
+		return base;
+
+	double ans = Power_3(base, (exponent >> 1));
+	ans *= ans;
+	//åˆ¤æ–­ä¼ å…¥çš„ exponent ä¸ºå¥‡æ•°æ—¶ï¼Œè¿˜éœ€è¦å¤šä¹˜ä¸€æ¬¡base
+	if ((exponent & 1) == 1)			//è¯¥æ“ä½œä¸ºä½è¿ç®—ï¼Œè‹¥ exponent ä¸ºå¶æ•°ï¼Œå…¶æœ€å³è¾¹çš„æ•°å¿…ä¸º 0 ï¼Œå¦åˆ™åˆ™ä¸º 1 ï¼›
+		ans *= base;
+
+	return ans;
+}
+
+double Power_4(double base, int exponent)
+{
+	//é¦–å…ˆéœ€è¦åˆ¤æ–­ï¼Œå½“ base ä¸º 0 ï¼Œä¸” exponent ä¸ºè´Ÿæ•°æ—¶ï¼Œç¨‹åºæŠ›å‡ºå¼‚å¸¸
+	if (equal(base, 0.0) && exponent < 0)
+	{
+		//å…¨å±€æ–¹å¼æŠ›å‡ºå¼‚å¸¸
+		g_InvalidInput = true;
+		//è¿”å›å€¼æ–¹å¼æŠ›å‡ºå¼‚å¸¸
+		return 0.0;
+	}
+
+	int absExponent = exponent;
+	if (exponent < 0)
+		absExponent = -exponent;
+	double ans = Power_3(base, absExponent);
+	if (exponent < 0)
+		ans = 1.0 / ans;
+
+	return ans;
+}
 
 
-// ====================²âÊÔ´úÂë====================
+// ====================æµ‹è¯•ä»£ç ====================
 void Test(const char* testName, double base, int exponent, double expectedResult, bool expectedFlag)
 {
-	double result = Power_2(base, exponent);
+	double result = Power_4(base, exponent);
 	if (equal(result, expectedResult) && g_InvalidInput == expectedFlag)
 		std::cout << testName << " passed" << std::endl;
 	else
@@ -67,26 +103,31 @@ void Test(const char* testName, double base, int exponent, double expectedResult
 
 int main(int argc, char* argv[])
 {
-	// µ×Êı¡¢Ö¸Êı¶¼ÎªÕıÊı
+	//cout << Power_4(2, 5) << endl;
+
+
+
+	// åº•æ•°ã€æŒ‡æ•°éƒ½ä¸ºæ­£æ•°
 	Test("Test1", 2, 3, 8, false);
 
-	// µ×ÊıÎª¸ºÊı¡¢Ö¸ÊıÎªÕıÊı
+	// åº•æ•°ä¸ºè´Ÿæ•°ã€æŒ‡æ•°ä¸ºæ­£æ•°
 	Test("Test2", -2, 3, -8, false);
 
-	// Ö¸ÊıÎª¸ºÊı
+	// æŒ‡æ•°ä¸ºè´Ÿæ•°
 	Test("Test3", 2, -3, 0.125, false);
 
-	// Ö¸ÊıÎª0
+	// æŒ‡æ•°ä¸º0
 	Test("Test4", 2, 0, 1, false);
 
-	// µ×Êı¡¢Ö¸Êı¶¼Îª0
+	// åº•æ•°ã€æŒ‡æ•°éƒ½ä¸º0
 	Test("Test5", 0, 0, 1, false);
 
-	// µ×ÊıÎª0¡¢Ö¸ÊıÎªÕıÊı
+	// åº•æ•°ä¸º0ã€æŒ‡æ•°ä¸ºæ­£æ•°
 	Test("Test6", 0, 4, 0, false);
 
-	// µ×ÊıÎª0¡¢Ö¸ÊıÎª¸ºÊı
+	// åº•æ•°ä¸º0ã€æŒ‡æ•°ä¸ºè´Ÿæ•°
 	Test("Test7", 0, -4, 0, true);
 
 	return 0;
 }
+
